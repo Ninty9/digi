@@ -1,0 +1,86 @@
+[gd_scene load_steps=14 format=3 uid="uid://1rgrtm4lsl8m"]
+
+[ext_resource type="Script" path="res://Player.cs" id="1_cpw3d"]
+[ext_resource type="Script" path="res://Camera.cs" id="2_w04no"]
+
+[sub_resource type="Gradient" id="Gradient_jcr1n"]
+offsets = PackedFloat32Array(0, 0.539683, 0.873016, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.0392157, 0, 0.47451, 1, 0.54, 0.54, 0.54, 1, 1, 0, 1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_k83ll"]
+noise_type = 3
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_rovko"]
+seamless = true
+color_ramp = SubResource("Gradient_jcr1n")
+noise = SubResource("FastNoiseLite_k83ll")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_n1tmq"]
+noise_type = 3
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_88u1t"]
+as_normal_map = true
+noise = SubResource("FastNoiseLite_n1tmq")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_46t04"]
+albedo_texture = SubResource("NoiseTexture2D_rovko")
+normal_enabled = true
+normal_texture = SubResource("NoiseTexture2D_88u1t")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_pa61e"]
+material = SubResource("StandardMaterial3D_46t04")
+size = Vector2(20, 20)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_fhq1x"]
+data = PackedVector3Array(10, 0, 10, -10, 0, 10, 10, 0, -10, -10, 0, 10, -10, 0, -10, 10, 0, -10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2g0be"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_uwhm3"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_1s8kq"]
+radius = 0.33451
+
+[node name="Node3D" type="Node3D"]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+mesh = SubResource("PlaneMesh_pa61e")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_fhq1x")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.87001, -0.123708, -0.477262, -0.482963, 0.408494, 0.774519, 0.099144, 0.904339, -0.41514, 0, 5, 0)
+
+[node name="player" type="Node" parent="."]
+
+[node name="Bean" type="RigidBody3D" parent="player" node_paths=PackedStringArray("camera")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+script = ExtResource("1_cpw3d")
+camera = NodePath("")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="player/Bean"]
+shape = SubResource("BoxShape3D_2g0be")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="player/Bean"]
+mesh = SubResource("BoxMesh_uwhm3")
+
+[node name="Label3D" type="Label3D" parent="player/Bean"]
+transform = Transform3D(-0.0425382, -0.999095, 0, 0.999095, -0.0425382, 0, 0, 0, 1, 0, 0, 0.503658)
+text = "(:"
+font_size = 100
+
+[node name="camBody" type="RigidBody3D" parent="player" node_paths=PackedStringArray("target")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.849847, 2.05665)
+gravity_scale = 0.0
+script = ExtResource("2_w04no")
+target = NodePath("../Bean")
+distance = 5.0
+focusRadius = 2.5
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="player/camBody"]
+shape = SubResource("SphereShape3D_1s8kq")
+
+[node name="Camera3D" type="Camera3D" parent="player/camBody"]
