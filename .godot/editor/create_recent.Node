@@ -1,9 +1,0 @@
-Marker3D
-Node
-DirectionalLight3D
-MeshInstance3D
-StaticBody3D
-Label3D
-CollisionShape3D
-RigidBody3D
-Camera3D
