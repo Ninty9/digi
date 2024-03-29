@@ -21,7 +21,7 @@ project/assembly_name="digi"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/terrabrush/plugin.cfg")
+enabled=PackedStringArray()
 
 [input]
 

@@ -61,14 +61,14 @@ public partial class Player : RigidBody3D
 			face.Text = "):<";
 			return;
 		}
-		if (Mathf.Round(AngularVelocity.Length()) > 1)
+		if (Input.IsAnythingPressed())
 		{
 			face.Text = ">_<";
 			return;
 		}
 		if (Mathf.Round(AngularVelocity.Length()) > 1)
 		{
-			face.Text = ">_<";
+			face.Text = "O:";
 			return;
 		}
 		face.Text = "(:";
