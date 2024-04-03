@@ -41,7 +41,7 @@ public partial class Camera : CharacterBody3D
 			camTarg.Velocity = (focusPoint + rotVec) - camTarg.GlobalPosition;
 			camTarg.MoveAndSlide();
 		}
-		Velocity = (camTarg.GlobalPosition - GlobalPosition) * 3;
+		Velocity = (camTarg.GlobalPosition - GlobalPosition) * 8;
 		MoveAndSlide();
 	}
 

@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Linq;
 using Godot;
 
 namespace digi;
@@ -12,6 +13,8 @@ public partial class Player : RigidBody3D
 
 	[Export] private AudioStreamPlayer3D hitSound;
 
+	[Export] private Area3D interactCollider;
+	
 	private Vector3 velocity;
 	
 	private const float Acceleration = 20f;
@@ -74,4 +77,18 @@ public partial class Player : RigidBody3D
 		face.Text = "(:";
 		
 	}
+
+	public override void _Input(InputEvent @event)
+	{
+		if (@event.IsActionPressed("Interact"))
+		{
+			if(Dialogue.CurrentTree != null)
+			{
+				Dialogue.CurrentTree.SendInput();
+				return;
+			}
+			interactCollider.GetOverlappingAreas().First().Call("Call");
+		}
+	}
+	
 }

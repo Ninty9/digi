@@ -1,0 +1,362 @@
+[gd_scene load_steps=44 format=3 uid="uid://of1tegy556v2"]
+
+[ext_resource type="Script" path="res://Player.cs" id="1_fj7xy"]
+[ext_resource type="AudioStream" uid="uid://dm18i8ek812ju" path="res://sounds/cardboard_box_impact_soft1.wav" id="2_4foqr"]
+[ext_resource type="AudioStream" uid="uid://crwdrrva0jafm" path="res://sounds/cardboard_box_impact_soft2.wav" id="3_b56ug"]
+[ext_resource type="AudioStream" uid="uid://dwjncs64edbw0" path="res://sounds/cardboard_box_impact_soft3.wav" id="4_3jb3e"]
+[ext_resource type="AudioStream" uid="uid://dick6e5edo71e" path="res://sounds/cardboard_box_impact_soft4.wav" id="5_bwl70"]
+[ext_resource type="AudioStream" uid="uid://bq4duxkfbotvd" path="res://sounds/cardboard_box_impact_soft5.wav" id="6_ub4m7"]
+[ext_resource type="AudioStream" uid="uid://bja26fyw8or46" path="res://sounds/cardboard_box_impact_soft6.wav" id="7_oecey"]
+[ext_resource type="AudioStream" uid="uid://dbl7bjs0l8bto" path="res://sounds/cardboard_box_impact_soft7.wav" id="8_tmlo2"]
+[ext_resource type="Script" path="res://Camera.cs" id="9_65v6h"]
+[ext_resource type="Shader" path="res://interlace.gdshader" id="10_s7c7v"]
+[ext_resource type="Script" path="res://interlace.gd" id="11_mian2"]
+[ext_resource type="Shader" path="res://vhs.gdshader" id="12_7128j"]
+[ext_resource type="Script" path="res://Dialogue.cs" id="13_su8xy"]
+[ext_resource type="Script" path="res://addons/dialogue_trees/DialogueTree.cs" id="14_l7i4o"]
+[ext_resource type="Texture2D" uid="uid://cillaorbnkuhn" path="res://icon.svg" id="14_yheiq"]
+[ext_resource type="Script" path="res://addons/dialogue_trees/scripts/core/DialogueTreeData.cs" id="15_4qaip"]
+[ext_resource type="Script" path="res://Profile.cs" id="15_xp7y3"]
+[ext_resource type="Script" path="res://TalkInteract.cs" id="16_yiyub"]
+
+[sub_resource type="Gradient" id="Gradient_jcr1n"]
+offsets = PackedFloat32Array(0, 0.539683, 0.873016, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.0392157, 0, 0.47451, 1, 0.54, 0.54, 0.54, 1, 1, 0, 1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_k83ll"]
+noise_type = 3
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_rovko"]
+seamless = true
+color_ramp = SubResource("Gradient_jcr1n")
+noise = SubResource("FastNoiseLite_k83ll")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_n1tmq"]
+noise_type = 3
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_88u1t"]
+as_normal_map = true
+noise = SubResource("FastNoiseLite_n1tmq")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_46t04"]
+albedo_texture = SubResource("NoiseTexture2D_rovko")
+normal_enabled = true
+normal_texture = SubResource("NoiseTexture2D_88u1t")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_pa61e"]
+material = SubResource("StandardMaterial3D_46t04")
+size = Vector2(20, 20)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_fhq1x"]
+data = PackedVector3Array(10, 0, 10, -10, 0, 10, 10, 0, -10, -10, 0, 10, -10, 0, -10, 10, 0, -10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2g0be"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_uwhm3"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_0ahyk"]
+random_pitch = 1.5
+random_volume_offset_db = 2.0
+streams_count = 7
+stream_0/stream = ExtResource("2_4foqr")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("3_b56ug")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("4_3jb3e")
+stream_2/weight = 1.0
+stream_3/stream = ExtResource("5_bwl70")
+stream_3/weight = 1.0
+stream_4/stream = ExtResource("6_ub4m7")
+stream_4/weight = 1.0
+stream_5/stream = ExtResource("7_oecey")
+stream_5/weight = 1.0
+stream_6/stream = ExtResource("8_tmlo2")
+stream_6/weight = 1.0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_faynb"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_1s8kq"]
+radius = 0.3
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_rpdqo"]
+viewport_path = NodePath("player/SubViewportContainer/SubViewport")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bxuvi"]
+resource_local_to_scene = true
+shader = ExtResource("10_s7c7v")
+shader_parameter/line_thickness = 2.0
+shader_parameter/delayed_screen = SubResource("ViewportTexture_rpdqo")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7ajmx"]
+shader = ExtResource("12_7128j")
+shader_parameter/wiggle = 0.03
+shader_parameter/wiggle_speed = 25.0
+shader_parameter/smear = 1.0
+shader_parameter/blur_samples = 15
+
+[sub_resource type="Resource" id="Resource_6ak7d"]
+script = ExtResource("15_xp7y3")
+Image = ExtResource("14_yheiq")
+Name = "John"
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_kwrh2"]
+width = 100
+height = 100
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ilad6"]
+sky_top_color = Color(0.780392, 0, 0.443137, 1)
+sky_horizon_color = Color(0.32549, 0, 0, 1)
+ground_bottom_color = Color(0, 0, 0.462745, 1)
+ground_horizon_color = Color(0.113725, 0, 0.231373, 1)
+
+[sub_resource type="Sky" id="Sky_shg6y"]
+sky_material = SubResource("ProceduralSkyMaterial_ilad6")
+
+[sub_resource type="Environment" id="Environment_nm4jo"]
+background_mode = 2
+sky = SubResource("Sky_shg6y")
+tonemap_white = 1.7
+glow_enabled = true
+fog_enabled = true
+fog_light_color = Color(0.627451, 0, 0.513726, 1)
+volumetric_fog_albedo = Color(1, 0, 1, 1)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_7koda"]
+radius = 2.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_oqqor"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_1klph"]
+data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
+
+[sub_resource type="Resource" id="Resource_1vohd"]
+script = ExtResource("15_4qaip")
+_dialogueNodeTypeNames = [&"Srt", &"Out"]
+_dialogueNodeTypes = PackedInt32Array(0, 1, 1)
+_connections = PackedInt32Array(0, 0, 2, 0, 2, 0, 1, 0)
+DialogueNodeSaveData = [null, ["didn't think about that one huh?", "John"], ["bogos binted", "John"]]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+mesh = SubResource("PlaneMesh_pa61e")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_fhq1x")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.0350689, 0.0922319, -0.99512, -0.994932, 0.0971122, -0.0260615, 0.0942346, 0.990991, 0.0951701, 0, 5, 0)
+
+[node name="player" type="Node" parent="."]
+
+[node name="Bean" type="RigidBody3D" parent="player" node_paths=PackedStringArray("face", "camera", "hitSound", "interactCollider")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+max_contacts_reported = 10
+contact_monitor = true
+script = ExtResource("1_fj7xy")
+face = NodePath("Label3D")
+camera = NodePath("../camBody")
+hitSound = NodePath("AudioStreamPlayer3D")
+interactCollider = NodePath("Interact Collider")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="player/Bean"]
+shape = SubResource("BoxShape3D_2g0be")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="player/Bean"]
+mesh = SubResource("BoxMesh_uwhm3")
+
+[node name="Label3D" type="Label3D" parent="player/Bean"]
+transform = Transform3D(-0.0425382, -0.999095, 0, 0.999095, -0.0425382, 0, 0, 0, 1, 0, 0, 0.503658)
+text = "(:"
+font_size = 100
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="player/Bean"]
+stream = SubResource("AudioStreamRandomizer_0ahyk")
+volume_db = -2.0
+max_polyphony = 8
+
+[node name="Interact Collider" type="Area3D" parent="player/Bean"]
+collision_layer = 4
+collision_mask = 4
+metadata/isPlayer = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="player/Bean/Interact Collider"]
+shape = SubResource("BoxShape3D_faynb")
+
+[node name="CamTarg" type="CharacterBody3D" parent="player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.1676, 3)
+motion_mode = 1
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="player/CamTarg"]
+top_level = true
+shape = SubResource("SphereShape3D_1s8kq")
+
+[node name="camBody" type="CharacterBody3D" parent="player" node_paths=PackedStringArray("target", "camTarg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 4)
+collision_layer = 0
+collision_mask = 0
+motion_mode = 1
+script = ExtResource("9_65v6h")
+target = NodePath("../Bean")
+distance = 5.0
+focusRadius = 2.5
+sens = 0.5
+shape = SubResource("SphereShape3D_1s8kq")
+camTarg = NodePath("../CamTarg")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="player/camBody"]
+shape = SubResource("SphereShape3D_1s8kq")
+
+[node name="Camera3D" type="Camera3D" parent="player/camBody"]
+current = true
+
+[node name="RemoteTransform3D" type="RemoteTransform3D" parent="player/camBody/Camera3D"]
+remote_path = NodePath("../../../SubViewportContainer/SubViewport/Camera3D")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="player"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="player/SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(1152, 648)
+render_target_update_mode = 4
+
+[node name="Camera3D" type="Camera3D" parent="player/SubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 4)
+
+[node name="Shaders" type="Control" parent="player"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="player/Shaders" node_paths=PackedStringArray("interlace_viewport", "interlacing_timer")]
+material = SubResource("ShaderMaterial_bxuvi")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("11_mian2")
+interlace_viewport = NodePath("../../SubViewportContainer/SubViewport")
+interlacing_timer = NodePath("Timer")
+
+[node name="Timer" type="Timer" parent="player/Shaders/ColorRect"]
+wait_time = 0.05
+autostart = true
+
+[node name="ColorRect2" type="ColorRect" parent="player/Shaders"]
+material = SubResource("ShaderMaterial_7ajmx")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Ui" type="Control" parent="player"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="player/Ui" node_paths=PackedStringArray("dia", "cha", "img")]
+custom_minimum_size = Vector2(7.045, 0)
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 256.0
+offset_top = 448.0
+offset_right = -256.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("13_su8xy")
+dia = NodePath("HBoxContainer/VBoxContainer/Dialogue")
+cha = NodePath("HBoxContainer/VBoxContainer/Character")
+img = NodePath("HBoxContainer/Image")
+profiles = Array[Object]([SubResource("Resource_6ak7d")])
+
+[node name="HBoxContainer" type="HBoxContainer" parent="player/Ui/PanelContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Image" type="TextureRect" parent="player/Ui/PanelContainer/HBoxContainer"]
+layout_mode = 2
+texture = SubResource("NoiseTexture2D_kwrh2")
+stretch_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="player/Ui/PanelContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Character" type="RichTextLabel" parent="player/Ui/PanelContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "test"
+fit_content = true
+
+[node name="ColorRect" type="ColorRect" parent="player/Ui/PanelContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 3)
+layout_mode = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Dialogue" type="RichTextLabel" parent="player/Ui/PanelContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "test"
+fit_content = true
+
+[node name="MarginContainer" type="MarginContainer" parent="player/Ui"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_nm4jo")
+
+[node name="Area3D" type="Area3D" parent="." node_paths=PackedStringArray("tree")]
+transform = Transform3D(-0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, -2.5, 0.5, 4.13398)
+collision_layer = 4
+collision_mask = 4
+script = ExtResource("16_yiyub")
+tree = NodePath("DialogueTree")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_7koda")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.999999)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Area3D/StaticBody3D2"]
+mesh = SubResource("BoxMesh_oqqor")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D/StaticBody3D2"]
+shape = SubResource("ConcavePolygonShape3D_1klph")
+
+[node name="Label3D" type="Label3D" parent="Area3D/StaticBody3D2"]
+transform = Transform3D(-0.0425382, -0.999095, 0, 0.999095, -0.0425382, 0, 0, 0, 1, 0, 0, 0.503658)
+text = "(:"
+font_size = 100
+
+[node name="DialogueTree" type="Node" parent="Area3D"]
+script = ExtResource("14_l7i4o")
+TreeData = SubResource("Resource_1vohd")
+
+[connection signal="body_entered" from="player/Bean" to="player/Bean" method="_on_collision"]
+[connection signal="timeout" from="player/Shaders/ColorRect/Timer" to="player/Shaders/ColorRect" method="_on_timer_timeout"]
+[connection signal="area_exited" from="Area3D" to="Area3D" method="_on_area_exited"]

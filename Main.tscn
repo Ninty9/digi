@@ -145,7 +145,7 @@ volume_db = -2.0
 max_polyphony = 8
 
 [node name="CamTarg" type="CharacterBody3D" parent="player"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 3)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.1676, 3)
 motion_mode = 1
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="player/CamTarg"]
@@ -183,7 +183,9 @@ grow_vertical = 2
 stretch = true
 
 [node name="SubViewport" type="SubViewport" parent="player/SubViewportContainer"]
+handle_input_locally = false
 size = Vector2i(1152, 648)
+render_target_update_mode = 4
 
 [node name="Camera3D" type="Camera3D" parent="player/SubViewportContainer/SubViewport"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 4)
