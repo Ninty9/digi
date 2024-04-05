@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=3 uid="uid://of1tegy556v2"]
+[gd_scene load_steps=38 format=3 uid="uid://of1tegy556v2"]
 
 [ext_resource type="Script" path="res://Player.cs" id="1_fj7xy"]
 [ext_resource type="AudioStream" uid="uid://dm18i8ek812ju" path="res://sounds/cardboard_box_impact_soft1.wav" id="2_4foqr"]
@@ -12,11 +12,8 @@
 [ext_resource type="Shader" path="res://interlace.gdshader" id="10_s7c7v"]
 [ext_resource type="Script" path="res://interlace.gd" id="11_mian2"]
 [ext_resource type="Shader" path="res://vhs.gdshader" id="12_7128j"]
-[ext_resource type="Script" path="res://Dialogue.cs" id="13_su8xy"]
 [ext_resource type="Script" path="res://addons/dialogue_trees/DialogueTree.cs" id="14_l7i4o"]
-[ext_resource type="Texture2D" uid="uid://cillaorbnkuhn" path="res://icon.svg" id="14_yheiq"]
-[ext_resource type="Script" path="res://addons/dialogue_trees/scripts/core/DialogueTreeData.cs" id="15_4qaip"]
-[ext_resource type="Script" path="res://Profile.cs" id="15_xp7y3"]
+[ext_resource type="Resource" uid="uid://bofuhal7tnvg7" path="res://Dialogue testing.tres" id="15_n7k3t"]
 [ext_resource type="Script" path="res://TalkInteract.cs" id="16_yiyub"]
 
 [sub_resource type="Gradient" id="Gradient_jcr1n"]
@@ -94,15 +91,6 @@ shader_parameter/wiggle_speed = 25.0
 shader_parameter/smear = 1.0
 shader_parameter/blur_samples = 15
 
-[sub_resource type="Resource" id="Resource_6ak7d"]
-script = ExtResource("15_xp7y3")
-Image = ExtResource("14_yheiq")
-Name = "John"
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_kwrh2"]
-width = 100
-height = 100
-
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ilad6"]
 sky_top_color = Color(0.780392, 0, 0.443137, 1)
 sky_horizon_color = Color(0.32549, 0, 0, 1)
@@ -128,13 +116,6 @@ radius = 2.0
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_1klph"]
 data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
-
-[sub_resource type="Resource" id="Resource_1vohd"]
-script = ExtResource("15_4qaip")
-_dialogueNodeTypeNames = [&"Srt", &"Out"]
-_dialogueNodeTypes = PackedInt32Array(0, 1, 1)
-_connections = PackedInt32Array(0, 0, 2, 0, 2, 0, 1, 0)
-DialogueNodeSaveData = [null, ["didn't think about that one huh?", "John"], ["bogos binted", "John"]]
 
 [node name="Node3D" type="Node3D"]
 
@@ -272,52 +253,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="player/Ui" node_paths=PackedStringArray("dia", "cha", "img")]
-custom_minimum_size = Vector2(7.045, 0)
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 256.0
-offset_top = 448.0
-offset_right = -256.0
-offset_bottom = -16.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("13_su8xy")
-dia = NodePath("HBoxContainer/VBoxContainer/Dialogue")
-cha = NodePath("HBoxContainer/VBoxContainer/Character")
-img = NodePath("HBoxContainer/Image")
-profiles = Array[Object]([SubResource("Resource_6ak7d")])
-
-[node name="HBoxContainer" type="HBoxContainer" parent="player/Ui/PanelContainer"]
-layout_mode = 2
-size_flags_vertical = 0
-
-[node name="Image" type="TextureRect" parent="player/Ui/PanelContainer/HBoxContainer"]
-layout_mode = 2
-texture = SubResource("NoiseTexture2D_kwrh2")
-stretch_mode = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="player/Ui/PanelContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="Character" type="RichTextLabel" parent="player/Ui/PanelContainer/HBoxContainer/VBoxContainer"]
-layout_mode = 2
-text = "test"
-fit_content = true
-
-[node name="ColorRect" type="ColorRect" parent="player/Ui/PanelContainer/HBoxContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 3)
-layout_mode = 2
-color = Color(0, 0, 0, 1)
-
-[node name="Dialogue" type="RichTextLabel" parent="player/Ui/PanelContainer/HBoxContainer/VBoxContainer"]
-layout_mode = 2
-text = "test"
-fit_content = true
-
 [node name="MarginContainer" type="MarginContainer" parent="player/Ui"]
 layout_mode = 1
 anchors_preset = 15
@@ -355,7 +290,7 @@ font_size = 100
 
 [node name="DialogueTree" type="Node" parent="Area3D"]
 script = ExtResource("14_l7i4o")
-TreeData = SubResource("Resource_1vohd")
+TreeData = ExtResource("15_n7k3t")
 
 [connection signal="body_entered" from="player/Bean" to="player/Bean" method="_on_collision"]
 [connection signal="timeout" from="player/Shaders/ColorRect/Timer" to="player/Shaders/ColorRect" method="_on_timer_timeout"]
