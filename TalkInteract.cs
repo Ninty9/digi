@@ -10,7 +10,8 @@ public partial class TalkInteract : Area3D
     [Export] private DialogueTree tree;
     public void Call()
     {
-        Dialogue.Start(tree);
+        if (Dialogue.CurrentTree == null)
+            Dialogue.Start(tree);
     }
 
     public void _on_area_exited(Area3D area)

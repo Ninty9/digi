@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_hy18h")
-_dialogueNodeTypeNames = [&"Out", &"Swc", &"VSt", &"Fnc", &"Var", &"VCn", &"Srt", &"Cal"]
-_dialogueNodeTypes = PackedInt32Array(0, 0, 0, 1, 0, 2, 3, 0, 4, 5, 6, 7, 0)
-_connections = PackedInt32Array(1, 0, 0, 0, 0, 0, 3, 0, 3, 0, 2, 0, 3, 1, 4, 0, 4, 0, 5, 0, 5, 0, 7, 0, 10, 0, 9, 0, 9, 1, 1, 0, 6, 0, 7, 0, 9, 0, 11, 0, 3, 2, 12, 0)
-DialogueNodeSaveData = [["didn't think about that one huh?", "John"], ["bogos binted", "John"], ["Yeah, didn't think so.", "John"], [PackedStringArray("I did.", "I didn\'t.", "What the fuck?")], ["I know, crazy right?", "John"], [8, ["true"]], ["death"], ["Anyways you should leave before the death squad gets here.", "John"], [&"death squad", &"Enum", "true", PackedStringArray("true")], [8, ["true"]], null, [6], ["Rude", "John"]]
+_dialogueNodeTypeNames = [&"Out", &"VSt", &"Fnc", &"Cal", &"Srt", &"Var", &"Swc", &"VCn"]
+_dialogueNodeTypes = PackedInt32Array(0, 1, 2, 0, 0, 0, 3, 4, 0, 0, 5, 6, 7)
+_connections = PackedInt32Array(8, 0, 11, 0, 11, 0, 9, 0, 0, 0, 1, 0, 1, 0, 3, 0, 7, 0, 12, 0, 12, 1, 5, 0, 2, 0, 3, 0, 12, 0, 6, 0, 11, 2, 4, 0, 11, 1, 0, 0, 5, 0, 8, 0)
+DialogueNodeSaveData = [["I know, crazy right?", "John"], [10, ["true"]], ["death"], ["Anyways you should leave before the death squad gets here.", "John"], ["Rude", "John"], ["bogos binted", "John"], [2], null, ["didn't think about that one huh?", "John"], ["Yeah, didn't think so.", "John"], [&"death squad", &"Enum", "true", PackedStringArray("true")], [PackedStringArray("I did.", "I haven\'t, no.", "What the fuck?")], [10, ["true"]]]

@@ -19,10 +19,9 @@ public partial class Dialogue : Control
 	[Export] private RichTextLabel cha;
 	[Export] private TextureRect img;
 	[Export] private Profile[] profiles;
-
-	private string[] options = new string[6];
 	
 	public static bool WantsInput;
+	private static bool choosing;
 	private float selHeight;
 	
 	private List<string> inputs = new ();
@@ -46,10 +45,10 @@ public partial class Dialogue : Control
 		}
 	}
 	
-	public void OnDialogueOutput(string[] dialogue, string character, Array parameters)
+	public void OnDialogueOutput(List<string> dialogue, string character, Array parameters)
 	{
 		string newD = "";
-		foreach (var i in inputs)
+		foreach (var i in dialogue)
 		{
 			if (newD == "")
 				newD += i;
@@ -62,24 +61,41 @@ public partial class Dialogue : Control
 
 	public override void _Process(double delta)
 	{
-		if(!WantsInput) return;
-		if (Input.IsActionJustPressed("Interact"))
+		if (Input.IsActionJustReleased("Interact"))
+		{
+			if(choosing)
+			{
+				choosing = false;
+				WantsInput = false;
+				diaSel.Visible = false;
+				CurrentTree.SendInput(inputs[(int)Mathf.Floor(diaSel.Position.Y / (dia.Size.Y / inputs.Count))]);
+				inputs = new List<string>();
+				return;
+			}
+			if (WantsInput)
+			{
+				choosing = true;
+				return;
+			}
+
+		}
+		GD.Print((int)Mathf.Floor(diaSel.Position.Y / (dia.Size.Y / inputs.Count)));
+		for (int i = 0; i < inputs.Count; i++)
+		{
+			GD.Print(i + ": " + inputs[i]);
+		}
+		if (Input.IsActionJustPressed("Interact") && choosing)
 		{
 			diaSel.Visible = true;
-			GD.Print("bint");
 		}
-		if (Input.IsActionPressed("Interact"))
+		if (Input.IsActionPressed("Interact") && choosing)
 		{
-			GD.Print("ed");
 			diaSel.Position = diaSel.Position with
 			{
 				Y = (diaSel.Position.Y + selSpeed * (float)delta) % (dia.Size.Y - 10)
 			};
 		}
-		if (Input.IsActionJustReleased("Interact"))
-		{
-			// WantsInput = false;
-		}
+
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -89,8 +105,7 @@ public partial class Dialogue : Control
 
 	private void CheckInput()
 	{
-		if(CurrentTree == null) return;
-		GD.Print(CurrentTree.GetInputOptions().Length);
+		if (CurrentTree == null) return;
 		if(inputs.Count != 0) return;
 		if(CurrentTree.GetInputOptions().Length == 0) return;
 		inputs = new List<string>();
@@ -100,21 +115,21 @@ public partial class Dialogue : Control
 			inputs.Add(input.Input);
 		}
 		if(inputs.Count == 0) return;
-		for (var i = 0; i < inputs.Count; i++)
-		{
-			options[i] = inputs[i];
-		}
 
-		OnDialogueOutput(options, "bean", null);
+		OnDialogueOutput(inputs, "Bean", null);
 		WantsInput = true;
 	}
 	
 	public static void Start(DialogueTree tree)
 	{
-		if(CurrentTree != null) CurrentTree.DialogueOutput -= d.OnDialogueOutput;
+		if(CurrentTree != null)
+		{
+			End();
+		}
 		CurrentTree = tree;
 		CurrentTree.DialogueOutput += (dialogue, character, parameters) =>
 			d.OnDialogueOutput(dialogue, character, parameters);
+		CurrentTree.DialogueEnded += End;
 		CurrentTree.StartDialogue();
 		d.Visible = true;
 	}
@@ -122,6 +137,8 @@ public partial class Dialogue : Control
 
 	public static void End()
 	{
+		CurrentTree.DialogueOutput -= d.OnDialogueOutput;
+		CurrentTree.DialogueEnded -= End;
 		CurrentTree = null;
 		d.Visible = false;
 	}

@@ -214,7 +214,7 @@ grow_vertical = 2
 script = ExtResource("13_73rkg")
 dia = NodePath("HBoxContainer/VBoxContainer/Dialogue")
 diaSel = NodePath("HBoxContainer/VBoxContainer/Dialogue/ColorRect")
-selSpeed = 2.0
+selSpeed = 100.0
 cha = NodePath("HBoxContainer/VBoxContainer/Character")
 img = NodePath("HBoxContainer/Image")
 profiles = Array[Object]([SubResource("Resource_6ak7d"), SubResource("Resource_nguex")])
@@ -246,11 +246,11 @@ color = Color(0, 0, 0, 1)
 layout_mode = 2
 text = "test
 eawe
-awe
 awe"
 fit_content = true
 
 [node name="ColorRect" type="ColorRect" parent="Ui/PanelContainer/HBoxContainer/VBoxContainer/Dialogue"]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -258,9 +258,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -268.0
-offset_top = -46.0
+offset_top = -34.5
 offset_right = -168.0
-offset_bottom = -36.0
+offset_bottom = -15.5
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(1, 0, 0.0156863, 0.337255)

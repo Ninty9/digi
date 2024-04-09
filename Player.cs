@@ -82,7 +82,7 @@ public partial class Player : RigidBody3D
 	{
 		if (@event.IsActionPressed("Interact"))
 		{
-			if(Dialogue.CurrentTree != null)
+			if(Dialogue.CurrentTree != null && !Dialogue.WantsInput)
 			{
 				Dialogue.CurrentTree.SendInput();
 				return;
